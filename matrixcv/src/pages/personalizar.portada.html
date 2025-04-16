@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editor de Portada.astro</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: black;
+      color: #0f0;
+      padding: 2rem;
+    }
+    .chat {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .message {
+      margin: 1rem 0;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      background: black;
+      border: 1px solid #0f0;
+      color: #0f0;
+    }
+    input:active{
+      border:2px #0f0;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #238636;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    a {
+      color: #0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat" id="chat"></div>
+
+  <script>
+    const preguntas = [
+      "¿Cuál es el título principal (h1)?",
+      "¿Cuál es el subtítulo (p.subtitle)?",
+      "¿Título de la primera columna?",
+      "¿Texto del título del enlace de la primera columna?",
+      "¿Texto el enlace de la primera columna?",
+      "¿Título de la segunda columna?",
+      "¿Texto del título del enlace de la segunda columna?",
+      "¿Texto el enlace de la segunda columna?",
+      "¿Título de la tercera columna?",
+      "¿Texto del título del enlace de la tercera columna?",
+      "¿Texto el enlace de la tercera columna?",
+    ];
+
+    const respuestas = [];
+    const chat = document.getElementById("chat");
+
+    let paso = 0;
+
+    function mostrarPregunta() {
+      const div = document.createElement("div");
+      div.className = "message";
+      const inputId = `respuesta-${paso}`;
+      div.innerHTML = `<strong>Bot:</strong> ${preguntas[paso]}<br><input id="${inputId}" autofocus />`;
+      chat.appendChild(div);
+
+      const input = document.getElementById(inputId);
+      input.focus();
+      input.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+          const valor = e.target.value.trim();
+          if (valor === "") return;
+          respuestas.push(valor);
+          e.target.disabled = true;
+          e.target.style.color = "#ffa657";
+
+          paso++;
+          if (paso < preguntas.length) {
+            mostrarPregunta();
+          } else {
+            generarAstro();
+          }
+        }
+      });
+    }
+
+    function generarAstro() {
+      const [
+        titulo,
+        subtitulo,
+        col1, cmd1, link1,
+        col2, cmd2, link2,
+        col3, cmd3, link3,
+      ] = respuestas;
+
+      const contenido = `---
+---
+<div class="terminal">
+  <div class="header">
+    <h1 class="title">${titulo}</h1>
+    <p class="subtitle">${subtitulo}</p>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="content">
+    <div class="column">
+      <h2>${col1}</h2>
+      <a href="${link1}" class="command">${cmd1}</a>
+    </div>
+    
+    <div class="column-divider"></div>
+    
+    <div class="column">
+      <h2>${col2}</h2>
+      <a href="${link2}" class="command">${cmd2}</a>
+    </div>
+    
+    <div class="column-divider"></div>
+    
+    <div class="column">
+      <h2>${col3}</h2>
+      <a href="${link3}" class="command">${cmd3}</a>
+    </div>
+  </div>
+</div>`;
+
+      const blob = new Blob([contenido], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const enlace = document.createElement("a");
+      enlace.href = url;
+      enlace.download = "Portada.astro";
+      enlace.textContent = "Haz clic aquí para descargar tu Portada.astro personalizada";
+      enlace.style.display = "block";
+      enlace.style.marginTop = "2rem";
+      chat.appendChild(enlace);
+    }
+
+    // Enlace adicional al final
+    const enlaceExtra = document.createElement("a");
+    enlaceExtra.href = "/personalizar.sobremi"; // <-- cambia esta URL por la que necesites
+    enlaceExtra.textContent = "Editar la siguiente página.";
+    enlaceExtra.target = "_blank";
+    enlaceExtra.style.display = "block";
+    enlaceExtra.style.marginTop = "1rem";
+    chat.appendChild(enlaceExtra);
+
+
+    mostrarPregunta();
+  </script>
+</body>
+</html>
