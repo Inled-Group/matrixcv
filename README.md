@@ -18,7 +18,7 @@ Tienes dos opciones para editar los archivos:
 
 ## Como hacer con la segunda opción
 Dirígete a MatrixCV en el repositorio de Inled-Group.
-Abre en el navegador [inled-group.github.io/matrixcv/personalizar](https://inled-group.github.io/matrixcv/personalizar) y escoge la sección a personalizar.
+Abre en el navegador [inled-group.github.io/matrixcv/personalizar.portada](https://inled-group.github.io/matrixcv/personalizar.portada) o [inled-group.github.io/matrixcv/personalizar.sobremi](https://inled-group.github.io/matrixcv/personalizar.sobremi) o [inled-group.github.io/matrixcv/personalizar.text](https://inled-group.github.io/matrixcv/personalizar.text)  y escoge la sección a personalizar.
 
 ### Personalizando la portada
 Tendrás un asistente que te guiará por el proceso de edición de la portada. En un minuto al tendrás lista.
