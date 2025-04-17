@@ -2,4 +2,8 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+    site: 'https://inled-group.github.io/matrixcv',
+    base: 'matrixcv',
+
+});
